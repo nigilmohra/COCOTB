@@ -51,6 +51,7 @@ The above command lists the contents of the site-packages directory within your 
 | OR Gate | Verilog | `or_gate.v` |
 | TestBench | Python | `or_test.py` |
 
+### Verilog 
 ```verilog
 module or_gate
 (
@@ -60,4 +61,24 @@ module or_gate
 );
 assign y = a | b;
 endmodule
+```
+
+### Python based TestBench (COCOTB)
+```python
+import cocotb
+from cocotb.triggers import Timer, RisingEdge
+
+@cocotb.test()					# Decorator
+async def or_test(dut):
+	
+	a = (0, 0, 1, 1)
+	b = (0, 1, 0, 1)
+	y = (0, 1, 1, 1)
+	
+	for i in range(4):
+		dut.a.value = a[i]
+		dut.b.value = b[i]
+		await Timer (1, 'ns')
+		
+		assert dut.y.value == y[i], f"Error at Iteration {i}"
 ```
