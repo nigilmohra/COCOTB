@@ -8,3 +8,13 @@ Before the installation begins, ensure the version of Python installed in the Li
 ```sh 
 python --version
 ```
+```verilog
+module or_gate
+(
+	input a,
+	input b,
+	output y
+);
+assign y = a | b;
+endmodule
+```
