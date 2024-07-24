@@ -44,8 +44,8 @@ ls venv/lib/python3.11/site-packages/
 ```
 The above command lists the contents of the site-packages directory within your Python virtual environment (`venv`). This directory contains all the Python packages and modules installed into the virtual environment.
 
-# Running COCOTB based Verification
-## Combinational Circuit
+# COCOTB based Verification
+## Combinational Circuits
 ### Verilog 
 Save the files as `or_gate.v`
 ```verilog
@@ -58,8 +58,6 @@ module or_gate
 assign y = a | b;
 endmodule
 ```
-
-Compile the Verilog file using the command `iverilog -o or_gate or_gate.v` and then run the simulation using the command `vvp or_gate`. 
 
 ### Python based TestBench (COCOTB)
 Save the file as `or_test.py`
@@ -82,7 +80,7 @@ async def or_test(dut):
 		assert dut.y.value == y[i], f"Error at Iteration {i}"
 ```
 
-### Compiling and Running using Makefile
+### Running using Makefile
 To simulation is performed using a `Makefile`. The `Makefile` automate the compilation and execution of programs and other tasks in a software project run on Unix-based operating systems. To create the `Makefile` run the following command:
 ```sh
 touch Makefile
@@ -99,9 +97,87 @@ MODULE := or_test
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 ```
-To verify the design, just type `make` in the terminal.
+Compile the Verilog file using the command `iverilog -o or_gate or_gate.v` and then run the simulation using the command `vvp or_gate`. Then in the terminal just type `make` to run the verification of the OR GATE.
 
 ### Result
-|![image](https://github.com/user-attachments/assets/8bf2ee55-27c7-4fd8-b064-30b0856f83f0)|
+|![image](https://github.com/user-attachments/assets/dcf764d8-87da-4db3-8162-8cbef5c70d9e)|
 |:-:|
 |_Figure 1. Simulation Result_|
+
+### Verilog
+Here is the verification of another combinational circuit, MUX2x1. Save the file as `mux.v`.
+```verilog
+module mux_2x1 
+(
+	input a, b, sel,
+	output y
+);
+	assign y = sel ? a : b;
+	initial begin
+		$dumpfile("dump.vcd");
+		$dumpvars(0, mux_2x1);	
+	end
+endmodule
+```
+
+### Python based TestBench (COCOTB)
+Save the file as `test_mux.py`.
+```python
+import cocotb
+from cocotb.triggers import Timer
+from cocotb.result import TestFailure
+
+@cocotb.test()
+async def mux_test(dut):
+
+    dut._log.info('start of test!')
+    await Timer(1, 'ns')
+
+    dut.a.value = 0
+    dut.b.value = 0
+
+    dut._log.info('Drive 0 to a & b inputs of 2x1 mux')
+    await Timer(1, 'ns')
+
+    dut.a.value = 1
+    dut.sel.value = 1
+    dut._log.info('Drive 1 to a & sel inputs of 2x1 mux')
+    await Timer(1, 'ns')
+
+    if dut.y.value != 1:
+        raise TestFailure('Result is incorrect. %s !=1' %str(dut.y))
+    else:
+        dut._log.info('PASS !')
+
+    dut.sel.value = 0
+    dut._log.info('Drive 0 to sel inputs of 2x1 mux') 
+    await Timer(1, 'ns')
+
+    if dut.y.value != 0:
+        raise TestFailure('Result is incorrect. %s !=0' %str(dut.y))
+    else:
+        dut._log.info('PASS !')
+```
+### Running using Makefile
+```make
+SIM ?= icarus
+TOPLEVEL_LANG ?= verilog
+PWD = $(shell pwd)
+VERILOG_SOURCES += $(PWD)/mux.v
+
+TOPLEVEL := mux_2x1
+MODULE := test_mux
+
+include $(shell cocotb-config --makefiles)/Makefile.sim
+```
+Compile the Verilog file using the command `iverilog -o mux mux.v` and then run the simulation using the command `vvp mux`. A `dump.vcd` file is also created along with the binary mux file. Then in the terminal just type `make` to run the verification of the MUX.
+
+### Results
+|![image](https://github.com/user-attachments/assets/67543e10-0417-4b3e-982d-948f92b3fd6b)|
+|:-:|
+|_Figure 2. MUX Simulation Result_ |
+
+Double click on `dump.vcd` file. Append the signals to the `signal` pane to view the output waveform.
+|![image](https://github.com/user-attachments/assets/85ff0d5e-c011-46c1-bd11-384eb9f15e3a)|
+|:-:|
+|_Figure 3. Output Waveform_ |
