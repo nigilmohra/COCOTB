@@ -1,16 +1,16 @@
 # Coroutine Co-Simulation Test Bench (COCOTB)
 This repository contains materials, simulations and other related documents on Coroutine Co-Simulation Test Bench (COCOTB). 
 
-# Installation
+# 1 Installation
 Cocotb installation documentations can be found here [COCOTB Installation](https://docs.cocotb.org/en/stable/install.html). The installation procedure here is for Ubuntu; the installation procedure goes like this: procedure statements, followed by the shell scripts to be executed.
 
-## Icarus Verilog and GTKWave
+## 1.1 Icarus Verilog and GTKWave
 Before the installation begins, install **Icarus Verilog** and **GTKWave** `sudo apt-get install iverilog gtkwave`. These tools will be used in the examples for verification of the RTL design.
 
-## Python and Python Package Installer
+## 1.2 Python and Python Package Installer
 Check the **Python Version** installed `python --version` and proceed to install the latest version of Python and `pip` (Python Package Installer) by running the following script `sudo apt-get install python 3 python3-pip`. 
 
-## Virtual Environment
+## 1.3 Virtual Environment
 Installation of COCOTB needs a virtual environment. Activating a virtual environment modifies the shell's environment so that when Python scripts or `pip` is used, they operate within the context of the virtual environment rather than the system-wide Python installation. 
 
 Creating a virtual environment allows you to manage a separate package installation for different projects. `venv` creates a virtually isolated Python installation for COCOTB.
@@ -24,7 +24,7 @@ Run `which python3` to locate where the Python 3 executable is installed in the 
 
 Then to invoke the virtual environment use the following scipt `source venv/bin/activate`. This command activates a Python virtual environment named `venv` that you previously created. 
 
-## Installing COCOTB Packages
+## 1.4 Installing COCOTB Packages
 Running the following script installs several packages related to COCOTB (Coroutine-based Co-Simulation TestBench) using `pip3`, the Python package installer for Python 3.
 
 ```sh
