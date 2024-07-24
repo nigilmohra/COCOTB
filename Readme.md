@@ -263,7 +263,7 @@ Compile the Verilog file using the command `iverilog -o dff dff.v` and then run 
 |:-:|
 | _Figure 4. D Flip Flip Simulation Result_|
 
-|![image](https://github.com/user-attachments/assets/0ee3ec9c-4656-4e4a-9d5f-49534ae98906)|
+|![image](https://github.com/user-attachments/assets/442f9d63-d750-4bd9-951a-78e99552b545)|
 |:-:|
 | _Figure 5. Output Waveform_|
 
