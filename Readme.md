@@ -17,7 +17,8 @@ Creating a virtual environment allows you to manage a separate package installat
 
 To create the virtual environment, run `pip3 -m venv venv` this creates a virtual environment named `venv` using the `pip3` command. Also, run `python3 -m venv venv` this is the standard method using Python 3's `venv` module to create a virtual environment named `venv`.
 
-**CHECK** To ensure the creation of a virtual environment, exit the virtual environment and, using the `ls` command, check the path folder.
+**CHECK** 
+To ensure the creation of a virtual environment, exit the virtual environment and, using the `ls` command, check the path folder.
 
 Run `which python3` to locate where the Python 3 executable is installed in the system. It prints the path to the Python 3 executables. 
 
