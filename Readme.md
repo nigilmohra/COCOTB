@@ -45,7 +45,8 @@ ls venv/lib/python3.11/site-packages/
 The above command lists the contents of the site-packages directory within your Python virtual environment (`venv`). This directory contains all the Python packages and modules installed into the virtual environment.
 
 # COCOTB based Verification
-## Combinational Circuits
+## Combinational Circuits | OR GATE
+Here is the verification of scombination circuit, OR GATE. The following examples are used to provide an example of the basic cocotb syntaxes.
 ### Verilog 
 Save the files as `or_gate.v`
 ```verilog
@@ -104,6 +105,8 @@ Compile the Verilog file using the command `iverilog -o or_gate or_gate.v` and t
 |:-:|
 |_Figure 1. Simulation Result_|
 
+## Combinational Circuits | MUX
+Here is the verification of scombination circuit, MUX. The following examples are used to provide an example of the cocotb syntaxes.
 ### Verilog
 Here is the verification of another combinational circuit, MUX2x1. Save the file as `mux.v`.
 ```verilog
@@ -182,7 +185,7 @@ Double click on `dump.vcd` file. Append the signals to the `signal` pane to view
 |:-:|
 |_Figure 3. Output Waveform_ |
 
-## Sequential Circuit
+## Sequential Circuit | D Flip Flop
 Here is the verification of sequential circuit, D Flip Flop. The following examples are used to provide an example of the cocotb syntaxes like generation of clock and creating always blocks.
 
 ### Verilog 
