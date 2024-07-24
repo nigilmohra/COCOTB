@@ -267,5 +267,5 @@ Compile the Verilog file using the command `iverilog -o dff dff.v` and then run 
 |:-:|
 | _Figure 5. Output Waveform_|
 
-# 5. Reference
+# 3. Reference
 For more information, visit [Cocotb Documentation](https://docs.cocotb.org/en/stable/index.html)
