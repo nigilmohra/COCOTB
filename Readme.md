@@ -46,12 +46,8 @@ The above command lists the contents of the site-packages directory within your 
 
 # Running COCOTB based Verification
 ## Combinational Circuit
-| Type | Language | Save | 
-| ---- | ----- |---- |
-| OR Gate | Verilog | `or_gate.v` |
-| TestBench | Python | `or_test.py` |
-
 ### Verilog 
+Save the files as `or_gate.v`
 ```verilog
 module or_gate
 (
@@ -63,7 +59,10 @@ assign y = a | b;
 endmodule
 ```
 
+Compile the Verilog file using the command `iverilog -o or_gate or_gate.v` and then run the simulation using the command `vvp or_gate`. 
+
 ### Python based TestBench (COCOTB)
+Save the file as `or_test.py`
 ```python
 import cocotb
 from cocotb.triggers import Timer, RisingEdge
@@ -82,3 +81,27 @@ async def or_test(dut):
 		
 		assert dut.y.value == y[i], f"Error at Iteration {i}"
 ```
+
+### Compiling and Running using Makefile
+To simulation is performed using a `Makefile`. The `Makefile` automate the compilation and execution of programs and other tasks in a software project run on Unix-based operating systems. To create the `Makefile` run the following command:
+```sh
+touch Makefile
+```
+Append the `Makefile` with the following contents
+```make
+SIM ?= icarus
+TOPLEVEL_LANG ?= verilog
+PWD = $(shell pwd)
+VERILOG_SOURCES += $(PWD)/or_gate.v
+
+TOPLEVEL := or_gate
+MODULE := or_test
+
+include $(shell cocotb-config --makefiles)/Makefile.sim
+```
+To verify the design, just type `make` in the terminal.
+
+### Result
+|![image](https://github.com/user-attachments/assets/8bf2ee55-27c7-4fd8-b064-30b0856f83f0)|
+|:-:|
+|_Figure 1. Simulation Result_|
