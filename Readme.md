@@ -170,7 +170,7 @@ MODULE := test_mux
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 ```
-Compile the Verilog file using the command `iverilog -o mux mux.v` and then run the simulation using the command `vvp mux`. A `dump.vcd` file is also created along with the binary mux file. Then in the terminal just type `make` to run the verification of the MUX.
+Compile the Verilog file using the command `iverilog -o mux mux.v` and then run the simulation using the command `vvp mux`. A `dump.vcd` file is also created along with the binary `mux` file. Then in the terminal just type `make` to run the verification of the MUX.
 
 ### Results
 |![image](https://github.com/user-attachments/assets/67543e10-0417-4b3e-982d-948f92b3fd6b)|
@@ -181,3 +181,88 @@ Double click on `dump.vcd` file. Append the signals to the `signal` pane to view
 |![image](https://github.com/user-attachments/assets/85ff0d5e-c011-46c1-bd11-384eb9f15e3a)|
 |:-:|
 |_Figure 3. Output Waveform_ |
+
+## Sequential Circuit
+Here is the verification of sequential circuit, D Flip Flop. The following examples are used to provide an example of the cocotb syntaxes like generation of clock and creating always blocks.
+
+### Verilog 
+Save the files as `dff.v`.
+```verilog
+module dff_rtl
+(
+    input clk,
+    input d,
+    output reg q
+);
+
+always @(posedge clk)
+begin
+    q <= d;
+end
+
+initial
+begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0, dff_rtl); // Assuming 0 specifies the VCD file handle
+end
+endmodule
+```
+
+### Python based TestBench (COCOTB)
+Save the file as `test_diff.py`.
+```python
+import cocotb
+import random
+from cocotb.clock import Clock
+from cocotb.triggers import RisingEdge, FallingEdge, Timer
+from cocotb.result import TestFailure
+
+@cocotb.test()
+async def test_dff(dut):
+
+    dut._log.info('Start of the test here')
+
+    cocotb.fork(Clock(dut.clk, 10, 'ns').start())
+    dut._log.info('Generating a clk of 10ns')
+
+    for i in range(10):
+        dut.d.value = random.randint(0, 1)
+        await FallingEdge(dut.clk)  # random value at every negedge clk
+
+    if dut.q.value != dut.d.value:
+        raise TestFailure('Incorrect: %s dut.q.value != dut.q.value' % dut.q.value.binstr)
+        print('Random value of d is', dut.d.value.binstr)
+        print('Value of output q is', dut.q.value.binstr)
+    else:
+        dut._log.info('Correct')
+        print('Random value of d is', dut.d.value.binstr)
+        print('Value of output q is', dut.q.value.binstr)
+
+    dut._log.info('End of test here')
+```
+
+### Makefile
+```make
+SIM ?= icarus
+TOPLEVEL_LANG ?= verilog
+PWD = $(shell pwd)
+VERILOG_SOURCES += $(PWD)/dff.v
+
+TOPLEVEL := dff_rtl
+MODULE := test_dff
+
+include $(shell cocotb-config --makefiles)/Makefile.sim
+```
+Compile the Verilog file using the command `iverilog -o dff dff.v` and then run the simulation using the command `vvp dff`. A `dump.vcd file` is also created along with the binary `dff` file. Then in the terminal just type `make` to run the verification of the D Flip Flop.
+
+### Results 
+|![image](https://github.com/user-attachments/assets/7e01c8e1-c893-4ec4-b5f5-e5ce35e7a8ab)|
+|:-:|
+| _Figure 4. D Flip Flip Simulation Result_|
+
+|![image](https://github.com/user-attachments/assets/0ee3ec9c-4656-4e4a-9d5f-49534ae98906)|
+|:-:|
+| _Figure 5. Output Waveform_|
+
+# Reference
+For more information, visit [Cocotb Documentation](https://docs.cocotb.org/en/stable/index.html)
