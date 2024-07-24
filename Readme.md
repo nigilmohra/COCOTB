@@ -42,7 +42,7 @@ pip3 install pytest cocotb cocotb-bus cocotb-coverage
 ```sh
 ls venv/lib/python3.11/site-packages/
 ```
-The above command lists the contents of the site-packages directory within your Python virtual environment (`venv`). This directory contains all the Python packages and modules installed into the virtual environment.
+The above command lists the contents of the site-packages directory within the Python virtual environment (`venv`). This directory contains all the Python packages and modules installed into the virtual environment.
 
 # 2. COCOTB based Verification
 ## 2.1. Combinational Circuits | OR GATE
