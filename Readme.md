@@ -31,12 +31,12 @@ Running the following script installs several packages related to COCOTB (Corout
 pip3 install pytest cocotb cocotb-bus cocotb-coverage
 ```
 
-| Package | Purpose |
+|Package |Purpose |
 |-----| ---- |
-| `pytest` | A testing framework for Python that is commonly used with COCOTB to run test cases |
-| `cocotb` |  The main COCOTB package that provides the core functionality for writing and running Python-based testbenches for HDL designs |
-| `cocotb-bus` |  An extension for COCOTB that provides bus functional models (BFMs) for common bus protocols (e.g., AXI, Avalon) |
-| `cocotb-coverage` | An extension for COCOTB that adds support for functional coverage analysis in testbenches |
+|`pytest`|A testing framework for Python that is commonly used with COCOTB to run test cases.|
+|`cocotb`|The main COCOTB package that provides the core functionality for writing and running Python-based testbenches for HDL designs.|
+|`cocotb-bus`|An extension for COCOTB that provides bus functional models (BFMs) for common bus protocols (e.g., AXI, Avalon).|
+|`cocotb-coverage` |An extension for COCOTB that adds support for functional coverage analysis in testbenches.|
 
 **CHECK**
 ```sh
