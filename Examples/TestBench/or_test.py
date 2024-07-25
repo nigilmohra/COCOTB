@@ -1,6 +1,6 @@
 # -------------------------------------------------------------  
 # COMBINATIONAL CIRCUIT | OR GATE | COCOTB TEST BENCH
-# -------------------------------------------------------------
+# ------------------------------------------------------------
 
 import cocotb
 from cocotb.triggers import Timer, RisingEdge
