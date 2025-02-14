@@ -1,5 +1,5 @@
-// Or Gate TestBench
-// Nigil
+# Or Gate TestBench
+# Nigil
 
 import cocotb
 from cocotb.triggers import Timer, RisingEdge
