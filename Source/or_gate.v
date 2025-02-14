@@ -1,4 +1,4 @@
-/* Or Gate
+// Or Gate
 
 module or_gate
 (
