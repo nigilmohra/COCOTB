@@ -1,6 +1,5 @@
-# -------------------------------------------------------------  
-# COMBINATIONAL CIRCUIT | OR GATE | COCOTB TEST BENCH
-# ------------------------------------------------------------
+// Or Gate TestBench
+// Nigil
 
 import cocotb
 from cocotb.triggers import Timer, RisingEdge
@@ -18,7 +17,3 @@ async def or_test(dut):
 		await Timer (1, 'ns')
 		
 		assert dut.y.value == y[i], f"Error at Iteration {i}"
-
-# -------------------------------------------------------------  
-#                      2024 NIGIL M R
-# -------------------------------------------------------------
