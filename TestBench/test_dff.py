@@ -1,6 +1,5 @@
-# -------------------------------------------------------------  
-# SEQUENTIAL CIRCUIT | D FLIP FLOP | COCOTB TEST BENCH
-# -------------------------------------------------------------
+# Sequential Circuit D Flip Flop TestBench
+# Nigil
 
 import cocotb
 import random
