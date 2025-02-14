@@ -1,6 +1,5 @@
-/* ----------------------------------------------------------  
-SEQUENTIAL CIRCUIT | D FLIP FLOP
-------------------------------------------------------------- */
+// Sequential Circuit D Flip Flop
+// Nigil
 
 module dff_rtl
 (
@@ -20,7 +19,3 @@ begin
     $dumpvars(0, dff_rtl); // Assuming 0 specifies the VCD file handle
 end
 endmodule
-
-/* -------------------------------------------------------------  
-                        2024 NIGIL M R
----------------------------------------------------------------- */
