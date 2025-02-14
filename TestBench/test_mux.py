@@ -1,6 +1,5 @@
-# -------------------------------------------------------------  
-# COMBINATIONAL CIRCUIT | MUX | COCOTB TEST BENCH
-# -------------------------------------------------------------
+# Combinational Circuit
+# Nigil
 
 import cocotb
 from cocotb.triggers import Timer
