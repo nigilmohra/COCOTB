@@ -1,16 +1,21 @@
 # Coroutine Co-Simulation Test Bench (COCOTB)
+
 This repository contains materials, simulations and other related documents on Coroutine Co-Simulation Test Bench (COCOTB). 
 
-# 1. Installation
+# Installation
+
 Cocotb installation documentations can be found here [COCOTB Installation](https://docs.cocotb.org/en/stable/install.html). The installation procedure here is for Ubuntu; the installation procedure goes like this: procedure statements, followed by the shell scripts to be executed.
 
-## 1.1. Icarus Verilog and GTKWave
+## Icarus Verilog and GTKWave
+
 Before the installation begins, install **Icarus Verilog** and **GTKWave** `sudo apt-get install iverilog gtkwave`. These tools will be used in the examples for verification of the RTL design.
 
-## 1.2. Python and Python Package Installer
+## Python and Python Package Installer
+
 Check the **Python Version** installed `python --version` and proceed to install the latest version of Python and `pip` (Python Package Installer) by running the following script `sudo apt-get install python 3 python3-pip`. 
 
-## 1.3. Virtual Environment
+## Virtual Environment
+
 Installation of COCOTB needs a virtual environment. Activating a virtual environment modifies the shell's environment so that when Python scripts or `pip` is used, they operate within the context of the virtual environment rather than the system-wide Python installation. 
 
 Creating a virtual environment allows you to manage a separate package installation for different projects. `venv` creates a virtually isolated Python installation for COCOTB.
@@ -24,7 +29,8 @@ Run `which python3` to locate where the Python 3 executable is installed in the 
 
 Then to invoke the virtual environment use the following scipt `source venv/bin/activate`. This command activates a Python virtual environment named `venv` that you previously created. 
 
-## 1.4 Installing COCOTB Packages
+## Installing COCOTB Packages
+
 Running the following script installs several packages related to COCOTB (Coroutine-based Co-Simulation TestBench) using `pip3`, the Python package installer for Python 3.
 
 ```sh
@@ -44,10 +50,13 @@ ls venv/lib/python3.11/site-packages/
 ```
 The above command lists the contents of the site-packages directory within the Python virtual environment (`venv`). This directory contains all the Python packages and modules installed into the virtual environment.
 
-# 2. COCOTB based Verification
-## 2.1. Combinational Circuits | OR GATE
+# COCOTB based Verification
+
+## Combinational Circuits | OR GATE
+
 Here is the verification of scombination circuit, OR GATE. The following examples are used to provide an example of the basic cocotb syntaxes.
-### 2.1.1. Verilog 
+### Verilog 
+
 Save the files as `or_gate.v`
 ```verilog
 module or_gate
@@ -60,7 +69,8 @@ assign y = a | b;
 endmodule
 ```
 
-### 2.1.2 Python based TestBench (COCOTB)
+### Python based TestBench (COCOTB)
+
 Save the file as `or_test.py`
 ```python
 import cocotb
@@ -81,12 +91,16 @@ async def or_test(dut):
 		assert dut.y.value == y[i], f"Error at Iteration {i}"
 ```
 
-### 2.1.3. Makefile
+### Makefile
+
 The simulation is performed using a `Makefile`. The `Makefile` automate the compilation and execution of programs and other tasks in a software project run on Unix-based operating systems. To create the `Makefile` run the following command:
+
 ```sh
 touch Makefile
 ```
+
 Append the `Makefile` with the following contents
+
 ```make
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
@@ -98,17 +112,21 @@ MODULE := or_test
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 ```
+
 Compile the Verilog file using the command `iverilog -o or_gate or_gate.v` and then run the simulation using the command `vvp or_gate`. Then in the terminal just type `make` to run the verification of the OR GATE.
 
-### 2.1.4. Result
+### Result
 |![image](https://github.com/user-attachments/assets/dcf764d8-87da-4db3-8162-8cbef5c70d9e)|
 |:-:|
 |_Figure 1. Simulation Result_|
 
-## 2.2. Combinational Circuits | MUX
+## Combinational Circuits | MUX
+
 Here is the verification of scombination circuit, MUX. The following examples are used to provide an example of the cocotb syntaxes.
-### 2.2.1. Verilog
+### Verilog
+
 Here is the verification of another combinational circuit, MUX2x1. Save the file as `mux.v`.
+
 ```verilog
 module mux_2x1 
 (
@@ -123,8 +141,10 @@ module mux_2x1
 endmodule
 ```
 
-### 2.2.2. Python based TestBench (COCOTB)
+### Python based TestBench (COCOTB)
+
 Save the file as `test_mux.py`.
+
 ```python
 import cocotb
 from cocotb.triggers import Timer
@@ -161,7 +181,8 @@ async def mux_test(dut):
     else:
         dut._log.info('PASS !')
 ```
-### 2.2.3. Makefile
+### Makefile
+
 ```make
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
@@ -173,23 +194,29 @@ MODULE := test_mux
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 ```
+
 Compile the Verilog file using the command `iverilog -o mux mux.v` and then run the simulation using the command `vvp mux`. A `dump.vcd` file is also created along with the binary `mux` file. Then in the terminal just type `make` to run the verification of the MUX.
 
-### 2.2.4. Results
+### Results
+
 |![image](https://github.com/user-attachments/assets/67543e10-0417-4b3e-982d-948f92b3fd6b)|
 |:-:|
 |_Figure 2. MUX Simulation Result_ |
 
 Double click on `dump.vcd` file. Append the signals to the `signal` pane to view the output waveform.
+
 |![image](https://github.com/user-attachments/assets/85ff0d5e-c011-46c1-bd11-384eb9f15e3a)|
 |:-:|
 |_Figure 3. Output Waveform_ |
 
-## 2.3. Sequential Circuit | D Flip Flop
+## Sequential Circuit | D Flip Flop
+
 Here is the verification of sequential circuit, D Flip Flop. The following examples are used to provide an example of the cocotb syntaxes like generation of clock and creating always blocks.
 
-### 2.3.1. Verilog 
+### Verilog 
+
 Save the files as `dff.v`.
+
 ```verilog
 module dff_rtl
 (
@@ -211,8 +238,10 @@ end
 endmodule
 ```
 
-### 2.3.2. Python based TestBench (COCOTB)
+### Python based TestBench (COCOTB)
+
 Save the file as `test_diff.py`.
+
 ```python
 import cocotb
 import random
@@ -244,7 +273,8 @@ async def test_dff(dut):
     dut._log.info('End of test here')
 ```
 
-### 2.3.3. Makefile
+### Makefile
+
 ```make
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
@@ -256,9 +286,11 @@ MODULE := test_dff
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 ```
+
 Compile the Verilog file using the command `iverilog -o dff dff.v` and then run the simulation using the command `vvp dff`. A `dump.vcd file` is also created along with the binary `dff` file. Then in the terminal just type `make` to run the verification of the D Flip Flop.
 
-### 2.3.4. Results 
+### Results 
+
 |![image](https://github.com/user-attachments/assets/7e01c8e1-c893-4ec4-b5f5-e5ce35e7a8ab)|
 |:-:|
 | _Figure 4. D Flip Flip Simulation Result_|
@@ -268,4 +300,5 @@ Compile the Verilog file using the command `iverilog -o dff dff.v` and then run 
 | _Figure 5. Output Waveform_|
 
 # Reference
+
 For more information, visit [Cocotb Documentation](https://docs.cocotb.org/en/stable/index.html)
